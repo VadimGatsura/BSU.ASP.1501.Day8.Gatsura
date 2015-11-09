@@ -3,10 +3,9 @@
 namespace Task.Matrix.Models {
     public class DiagonalMatrix<T> : SquareMatrix<T> {
         #region Constructors
-        public DiagonalMatrix() : base(1) { }
         public DiagonalMatrix(int size) : base(size) { }
 
-        public DiagonalMatrix(T[,] inArray) {
+        public DiagonalMatrix(T[,] inArray) : base(inArray.GetLength(0)) {
             if (inArray.GetLength(0) != inArray.GetLength(1) && inArray.GetLength(0) > 0)
                 throw new ArgumentException($"Argument {nameof(inArray)} doesn't square array");
             if (!CheckDiagonal(inArray))

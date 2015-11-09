@@ -11,7 +11,6 @@ namespace Task.Matrix.Models {
         public int Size { get; protected set; }
 
         #region Constructors
-        public SquareMatrix(): this(1) {} 
         public SquareMatrix(int size) {
             if(size <= 0)
                 throw new ArgumentOutOfRangeException(nameof(size));
@@ -19,7 +18,7 @@ namespace Task.Matrix.Models {
             array = new T[Size, Size];
             for(int i = 0; i < Size; i++) {
                 for(int j = 0; j < Size; j++)
-                    this[i, j] = default(T);
+                    array[i, j] = default(T);
             }
 
         }
@@ -67,10 +66,10 @@ namespace Task.Matrix.Models {
 
         public override string ToString() {
             StringBuilder matrixBuilder = new StringBuilder();
-            matrixBuilder.Append($"Matrix. Size: {Size}");
+            matrixBuilder.Append($"Matrix. Size: {Size}\n");
             for(int i = 0; i < Size; i++) {
                 for(int j = 0; j < Size; j++) {
-                    matrixBuilder.Append($"{this[i, j], 10}");
+                    matrixBuilder.Append($"{this[i, j], 5}");
                 }
                 matrixBuilder.Append("\n");
             }
@@ -84,7 +83,7 @@ namespace Task.Matrix.Models {
             array = new T[Size, Size];
             for (int i = 0; i < Size; i++) {
             for (int j = 0; j < Size; j++)
-                this[i, j] = inArray[i, j];
+                array[i, j] = inArray[i, j];
             }
         }
 

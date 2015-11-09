@@ -3,10 +3,9 @@
 namespace Task.Matrix.Models {
     public class SymmetricMatrix<T>: SquareMatrix<T> {
         #region Constructors
-        public SymmetricMatrix() : base(1) { }
         public SymmetricMatrix(int size) : base(size) { }
 
-        public SymmetricMatrix(T[,] inArray) {
+        public SymmetricMatrix(T[,] inArray) : base(inArray.GetLength(0)) {
             if (inArray == null)
                 throw new ArgumentNullException(nameof(inArray));
             if (inArray.GetLength(0) != inArray.GetLength(1) && inArray.GetLength(0) > 0)
