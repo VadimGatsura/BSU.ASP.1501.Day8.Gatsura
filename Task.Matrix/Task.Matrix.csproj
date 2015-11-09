@@ -40,7 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SquareMatrix.cs" />
+    <Compile Include="ComputeMatrixSumVisitor.cs" />
+    <Compile Include="MatrixEventArgs.cs" />
+    <Compile Include="MatrixExtensions.cs" />
+    <Compile Include="Models\DiagonalMatrix.cs" />
+    <Compile Include="IMatrixVisitor.cs" />
+    <Compile Include="Models\Matrix.cs" />
+    <Compile Include="Models\SimmetricMatrix.cs" />
+    <Compile Include="Models\SquareMatrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
