@@ -9,7 +9,7 @@ namespace Task.Matrix {
             
         }
 
-        public void Visit(SimmetricMatrix<T> matrix, Matrix<T> addMatrix) {
+        public void Visit(SymmetricMatrix<T> matrix, Matrix<T> addMatrix) {
             throw new NotImplementedException();
         }
 

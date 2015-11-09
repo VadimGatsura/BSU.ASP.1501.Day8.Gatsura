@@ -46,7 +46,7 @@
     <Compile Include="Models\DiagonalMatrix.cs" />
     <Compile Include="IMatrixVisitor.cs" />
     <Compile Include="Models\Matrix.cs" />
-    <Compile Include="Models\SimmetricMatrix.cs" />
+    <Compile Include="Models\SymmetricMatrix.cs" />
     <Compile Include="Models\SquareMatrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

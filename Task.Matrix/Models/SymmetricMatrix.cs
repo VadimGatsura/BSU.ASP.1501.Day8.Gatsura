@@ -1,19 +1,21 @@
 ﻿using System;
 
 namespace Task.Matrix.Models {
-    public class DiagonalMatrix<T> : SquareMatrix<T> {
+    public class SymmetricMatrix<T>: SquareMatrix<T> {
         #region Constructors
-        public DiagonalMatrix() : base(1) { }
-        public DiagonalMatrix(int size) : base(size) { }
+        public SymmetricMatrix() : base(1) { }
+        public SymmetricMatrix(int size) : base(size) { }
 
-        public DiagonalMatrix(T[,] inArray) {
+        public SymmetricMatrix(T[,] inArray) {
+            if (inArray == null)
+                throw new ArgumentNullException(nameof(inArray));
             if (inArray.GetLength(0) != inArray.GetLength(1) && inArray.GetLength(0) > 0)
                 throw new ArgumentException($"Argument {nameof(inArray)} doesn't square array");
-            if (!CheckDiagonal(inArray))
+            if(!CheckSymmetry(inArray))
                 throw new ArgumentException($"{nameof(inArray)} doesn't symmetric matrix");
             Size = inArray.GetLength(0);
             InitializeMatrix(inArray);
-        }
+        } 
         #endregion
 
         public override T this[int i, int j] {
@@ -23,20 +25,19 @@ namespace Task.Matrix.Models {
                     throw new ArgumentOutOfRangeException(nameof(i));
                 if (j < 0 && j >= Size)
                     throw new ArgumentOutOfRangeException(nameof(j));
-                if(i != j)
-                    throw new ArgumentException("In diagonal matrix you may change elements only in diagonal");
                 array[i, j] = value;
-                OnUpdate(this, new MatrixEventArgs(i, j));
+                array[j, i] = value;
+                OnUpdate(this , new MatrixEventArgs(i, j));
+                OnUpdate(this, new MatrixEventArgs(j, i));
             }
         }
 
-        private bool CheckDiagonal(T[,] inArray) {
+        private bool CheckSymmetry(T[,] inArray) {
             int size = inArray.GetLength(0);
-            for (int i = 0; i < size; i++) {
-                for (int j = 0; j < size; j++) {
-                    if(i != j)
-                        if(!array[i, j].Equals(default(T)))
-                            return false;
+            for(int i = 0; i < size; i++) {
+                for(int j = 0; j < size; j++) {
+                    if(!inArray[i, j].Equals(inArray[j, i]))
+                        return false;
                 }
             }
             return true;
