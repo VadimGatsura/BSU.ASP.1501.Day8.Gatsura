@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Task.Matrix.Models {
-    public class SquareMatrix<T> {
+    public class SquareMatrix<T> : IEquatable<SquareMatrix<T>> {
 
         public event EventHandler<MatrixEventArgs> Update = delegate { };
 
@@ -62,6 +62,29 @@ namespace Task.Matrix.Models {
             for(int i = 0; i < Size; i++)
                 for(int j = 0; j < Size; j++)
                     yield return this[i, j];
+        }
+
+        public bool Equals(SquareMatrix<T> other) {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+
+            if(Size != other.Size) return false;
+
+            for(int i = 0; i < Size; i++)
+                for(int j = 0; j < Size; j++)
+                    if(!array[i, j].Equals(other.array[i, j]))
+                        return false;
+
+            return true;
+        }
+
+        public override bool Equals(object obj) {
+            if(ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+
+            if(obj.GetType() != GetType() && !obj.GetType().IsSubclassOf(typeof(SquareMatrix<T>)))
+                return false;
+            return Equals((SquareMatrix<T>) obj);
         }
 
         public override string ToString() {

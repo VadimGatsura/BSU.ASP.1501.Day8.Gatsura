@@ -12,6 +12,8 @@ namespace Task.Matrix {
                 throw new ArgumentNullException(nameof(addMatrix));
             if (matrix.Size != addMatrix.Size)
                 throw new ArgumentException("Matrix sizes doesn't match");
+
+            AddMatrix(matrix, addMatrix);
         }
 
         public void Visit(SymmetricMatrix<T> matrix, SquareMatrix<T> addMatrix) {
@@ -21,6 +23,8 @@ namespace Task.Matrix {
                 throw new ArgumentNullException(nameof(addMatrix));
             if (matrix.Size != addMatrix.Size)
                 throw new ArgumentException("Matrix sizes doesn't match");
+
+            AddMatrix(matrix, addMatrix);
         }
 
         public void Visit(DiagonalMatrix<T> matrix, SquareMatrix<T> addMatrix) {
@@ -31,12 +35,16 @@ namespace Task.Matrix {
             if (matrix.Size != addMatrix.Size)
                 throw new ArgumentException("Matrix sizes doesn't match");
 
+           AddMatrix(matrix, addMatrix);
+        }
+
+        private void AddMatrix(SquareMatrix<T> firstMatrix, SquareMatrix<T> secondMatrix) {
             try {
-                Result = new SquareMatrix<T>(matrix.Size);
-                for(int i = 0; i < matrix.Size; i++)
-                    for(int j = 0; j < matrix.Size; j++)
-                        Result[i,j] = AddHelper<T>.Add(matrix[i,j], addMatrix[i,j]);
-            } catch(InvalidOperationException ex) {
+                Result = new SquareMatrix<T>(firstMatrix.Size);
+                for (int i = 0; i < firstMatrix.Size; i++)
+                    for (int j = 0; j < firstMatrix.Size; j++)
+                        Result[i, j] = AddHelper<T>.Add(firstMatrix[i, j], secondMatrix[i, j]);
+            } catch (InvalidOperationException ex) {
                 throw new NotSupportedException($"Add of two matrix for {typeof(T)} not suported", ex);
             }
         }
