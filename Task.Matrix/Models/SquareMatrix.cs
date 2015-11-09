@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Task.Matrix.Models {
-    public class SquareMatrix<T> : Matrix<T> {
+    public class SquareMatrix<T> {
+
+        public event EventHandler<MatrixEventArgs> Update = delegate { };
+
         protected T[,] array;
         public int Size { get; protected set; }
 
@@ -52,6 +55,10 @@ namespace Task.Matrix.Models {
 
         #region Public Methods
 
+        public void Accept(IMatrixVisitor<T> visitor, SquareMatrix<T> matrix) {
+            visitor.Visit((dynamic)this, matrix);
+        }
+
         public IEnumerable<T> GetMatrix() {
             for(int i = 0; i < Size; i++)
                 for(int j = 0; j < Size; j++)
@@ -72,6 +79,7 @@ namespace Task.Matrix.Models {
 
         #endregion
 
+        #region Protected Methods
         protected void InitializeMatrix(T[,] inArray) {
             array = new T[Size, Size];
             for (int i = 0; i < Size; i++) {
@@ -79,6 +87,12 @@ namespace Task.Matrix.Models {
                 this[i, j] = inArray[i, j];
             }
         }
+
+        protected void OnUpdate(object sender, MatrixEventArgs e) {
+            var update = Update;
+            update?.Invoke(sender, e);
+        }
+        #endregion
     }
 
 }

@@ -5,15 +5,15 @@ using Task.Matrix.Models;
 namespace Task.Matrix {
     internal class ComputeMatrixSumVisitor<T>: IMatrixVisitor<T> {
         public T Sum { get; private set; }
-        public void Visit(SquareMatrix<T> matrix, Matrix<T> addMatrix) {
+        public void Visit(SquareMatrix<T> matrix, SquareMatrix<T> addMatrix) {
             
         }
 
-        public void Visit(SymmetricMatrix<T> matrix, Matrix<T> addMatrix) {
+        public void Visit(SymmetricMatrix<T> matrix, SquareMatrix<T> addMatrix) {
             throw new NotImplementedException();
         }
 
-        public void Visit(DiagonalMatrix<T> matrix, Matrix<T> addMatrix) {
+        public void Visit(DiagonalMatrix<T> matrix, SquareMatrix<T> addMatrix) {
             throw new NotImplementedException();
         }
 
