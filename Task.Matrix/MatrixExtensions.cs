@@ -2,10 +2,10 @@
 
 namespace Task.Matrix {
     public static class MatrixExtensions {
-        public static T Add<T>(this SquareMatrix<T> matrix, SquareMatrix<T> addMatrix) {
+        public static SquareMatrix<T> Add<T>(this SquareMatrix<T> matrix, SquareMatrix<T> addMatrix) {
             var visitor = new ComputeMatrixSumVisitor<T>();
             matrix.Accept(visitor, addMatrix);
-            return visitor.Sum;
+            return visitor.Result;
         }
     }
 }
