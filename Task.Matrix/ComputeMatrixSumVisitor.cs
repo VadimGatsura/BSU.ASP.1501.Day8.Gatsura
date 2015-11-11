@@ -5,7 +5,7 @@ using Task.Matrix.Models;
 namespace Task.Matrix {
     internal class ComputeMatrixSumVisitor<T>: IMatrixVisitor<T> {
         public SquareMatrix<T> Result { get; private set; }
-        public void Visit(SquareMatrix<T> matrix, SquareMatrix<T> addMatrix) {
+        public void Visit(SquareMatrix<T> matrix, Matrix<T> addMatrix) {
             if(matrix == null)
                 throw new ArgumentNullException(nameof(matrix));
             if (addMatrix == null)
@@ -16,7 +16,7 @@ namespace Task.Matrix {
             AddMatrix(matrix, addMatrix);
         }
 
-        public void Visit(SymmetricMatrix<T> matrix, SquareMatrix<T> addMatrix) {
+        public void Visit(SymmetricMatrix<T> matrix, Matrix<T> addMatrix) {
             if (matrix == null)
                 throw new ArgumentNullException(nameof(matrix));
             if (addMatrix == null)
@@ -27,7 +27,7 @@ namespace Task.Matrix {
             AddMatrix(matrix, addMatrix);
         }
 
-        public void Visit(DiagonalMatrix<T> matrix, SquareMatrix<T> addMatrix) {
+        public void Visit(DiagonalMatrix<T> matrix, Matrix<T> addMatrix) {
             if (matrix == null)
                 throw new ArgumentNullException(nameof(matrix));
             if (addMatrix == null)
@@ -38,7 +38,7 @@ namespace Task.Matrix {
            AddMatrix(matrix, addMatrix);
         }
 
-        private void AddMatrix(SquareMatrix<T> firstMatrix, SquareMatrix<T> secondMatrix) {
+        private void AddMatrix(Matrix<T> firstMatrix, Matrix<T> secondMatrix) {
             try {
                 Result = new SquareMatrix<T>(firstMatrix.Size);
                 for (int i = 0; i < firstMatrix.Size; i++)

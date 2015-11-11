@@ -45,6 +45,7 @@
     <Compile Include="MatrixExtensions.cs" />
     <Compile Include="Models\DiagonalMatrix.cs" />
     <Compile Include="IMatrixVisitor.cs" />
+    <Compile Include="Models\Matrix.cs" />
     <Compile Include="Models\SymmetricMatrix.cs" />
     <Compile Include="Models\SquareMatrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

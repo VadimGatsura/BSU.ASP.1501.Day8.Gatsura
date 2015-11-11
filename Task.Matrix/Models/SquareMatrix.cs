@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Task.Matrix.Models {
-    public class SquareMatrix<T> : IEquatable<SquareMatrix<T>> {
-
-        public event EventHandler<MatrixEventArgs> Update = delegate { };
-
-        protected T[,] array;
-        public int Size { get; protected set; }
+    public class SquareMatrix<T> : Matrix<T> {
+        private readonly T[,] m_Array;
 
         #region Constructors
+
+        protected SquareMatrix() { } 
+
         public SquareMatrix(int size) {
             if(size <= 0)
                 throw new ArgumentOutOfRangeException(nameof(size));
             Size = size;
-            array = new T[Size, Size];
+            m_Array = new T[Size, Size];
             for(int i = 0; i < Size; i++) {
                 for(int j = 0; j < Size; j++)
-                    array[i, j] = default(T);
+                    m_Array[i, j] = default(T);
             }
 
         }
@@ -30,33 +28,16 @@ namespace Task.Matrix.Models {
                 throw new ArgumentException($"Argument {nameof(inArray)} doesn't square array");
 
             Size = inArray.GetLength(0);
-            InitializeMatrix(inArray);
-        } 
+            m_Array = new T[Size, Size];
+            for (int i = 0; i < Size; i++) {
+                for (int j = 0; j < Size; j++)
+                    m_Array[i, j] = inArray[i, j];
+            }
+        }
+
         #endregion
 
-        public virtual T this[int i, int j] {
-            get {
-                if( i < 0 && i >= Size)
-                    throw new ArgumentOutOfRangeException(nameof(i));
-                if (j < 0 && j >= Size)
-                    throw new ArgumentOutOfRangeException(nameof(j));
-                return array[i, j];
-            }
-            set {
-                if (i < 0 && i >= Size)
-                    throw new ArgumentOutOfRangeException(nameof(i));
-                if (j < 0 && j >= Size)
-                    throw new ArgumentOutOfRangeException(nameof(j));
-                array[i, j] = value;
-                OnUpdate(this, new MatrixEventArgs(i, j));
-            }
-        }
-
         #region Public Methods
-
-        public void Accept(IMatrixVisitor<T> visitor, SquareMatrix<T> matrix) {
-            visitor.Visit((dynamic)this, matrix);
-        }
 
         public IEnumerable<T> GetMatrix() {
             for(int i = 0; i < Size; i++)
@@ -64,57 +45,17 @@ namespace Task.Matrix.Models {
                     yield return this[i, j];
         }
 
-        public bool Equals(SquareMatrix<T> other) {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-
-            if(Size != other.Size) return false;
-
-            for(int i = 0; i < Size; i++)
-                for(int j = 0; j < Size; j++)
-                    if(!array[i, j].Equals(other.array[i, j]))
-                        return false;
-
-            return true;
-        }
-
-        public override bool Equals(object obj) {
-            if(ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-
-            if(obj.GetType() != GetType() && !obj.GetType().IsSubclassOf(typeof(SquareMatrix<T>)))
-                return false;
-            return Equals((SquareMatrix<T>) obj);
-        }
-
-        public override string ToString() {
-            StringBuilder matrixBuilder = new StringBuilder();
-            matrixBuilder.Append($"Matrix. Size: {Size}\n");
-            for(int i = 0; i < Size; i++) {
-                for(int j = 0; j < Size; j++) {
-                    matrixBuilder.Append($"{this[i, j], 5}");
-                }
-                matrixBuilder.Append("\n");
-            }
-            return matrixBuilder.ToString(); 
-        }
-
+        
+        public override int GetHashCode() => m_Array?.GetHashCode() ?? 0;
         #endregion
 
         #region Protected Methods
-        protected void InitializeMatrix(T[,] inArray) {
-            array = new T[Size, Size];
-            for (int i = 0; i < Size; i++) {
-            for (int j = 0; j < Size; j++)
-                array[i, j] = inArray[i, j];
-            }
-        }
 
-        protected void OnUpdate(object sender, MatrixEventArgs e) {
-            var update = Update;
-            update?.Invoke(sender, e);
+        protected override T GetValue(int i, int j) => m_Array[i, j];
+
+        protected override void SetValue(int i, int j, T value) {
+            m_Array[i, j] = value;
         }
         #endregion
     }
-
 }

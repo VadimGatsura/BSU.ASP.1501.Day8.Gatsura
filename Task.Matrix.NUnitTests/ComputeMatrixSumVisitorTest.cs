@@ -16,7 +16,7 @@ namespace Task.Matrix.NUnitTests {
         }
 
         [TestCaseSource(nameof(TestDatas))]
-        public void MatrixsSum_Test(SquareMatrix<int> firstMatrix, SquareMatrix<int> secondMatrix, SquareMatrix<int> resultMatrix ) {
+        public void MatrixsSum_Test(Matrix<int> firstMatrix, Matrix<int> secondMatrix, Matrix<int> resultMatrix ) {
             SquareMatrix<int> result = firstMatrix.Add(secondMatrix);
 
             Assert.AreEqual(resultMatrix.Equals(result), true);
@@ -31,7 +31,7 @@ namespace Task.Matrix.NUnitTests {
             }
         }
         [TestCaseSource(nameof(TestEqualsDatas))]
-        public void Matrix_Equals_Test(SquareMatrix<int> firstMatrix, SquareMatrix<int> secondMatrix, bool result) {
+        public void Matrix_Equals_Test(Matrix<int> firstMatrix, Matrix<int> secondMatrix, bool result) {
             Assert.AreEqual(firstMatrix.Equals(secondMatrix), result);    
         }
     }
